@@ -1,52 +1,70 @@
 {
-  "type" : "search",
-  "results" : [ {
-    "criteria" : {
-      "lowestRank" : 2
+  "type": "search",
+  "results": [
+    {
+      "criteria": {
+        "lowestRank": 2
+      },
+      "results": [
+        {
+          "id": 2,
+          "lastName": "Johnson"
+        },
+        {
+          "id": 1,
+          "lastName": "Smith"
+        }
+      ]
     },
-    "results" : [ {
-      "id" : 2,
-      "lastName" : "Johnson"
-    }, {
-      "id" : 1,
-      "lastName" : "Smith"
-    } ]
-  }, {
-    "criteria" : {
-      "lastName" : "Smith"
+    {
+      "criteria": {
+        "lastName": "Smith"
+      },
+      "results": [
+        {
+          "id": 3,
+          "lastName": "Smith"
+        },
+        {
+          "id": 1,
+          "lastName": "Smith"
+        }
+      ]
     },
-    "results" : [ {
-      "id" : 3,
-      "lastName" : "Smith"
-    }, {
-      "id" : 1,
-      "lastName" : "Smith"
-    } ]
-  }, {
-    "criteria" : {
-      "lastName" : "Johnson"
+    {
+      "criteria": {
+        "lastName": "Johnson"
+      },
+      "results": [
+        {
+          "id": 2,
+          "lastName": "Johnson"
+        }
+      ]
     },
-    "results" : [ {
-      "id" : 2,
-      "lastName" : "Johnson"
-    } ]
-  }, {
-    "criteria" : {
-      "minExpenses" : 50,
-      "maxExpenses" : 60
+    {
+      "criteria": {
+        "minExpenses": 50,
+        "maxExpenses": 60
+      },
+      "results": [
+        {
+          "id": 3,
+          "lastName": "Smith"
+        }
+      ]
     },
-    "results" : [ {
-      "id" : 3,
-      "lastName" : "Smith"
-    } ]
-  }, {
-    "criteria" : {
-      "productName" : "Some Product",
-      "minTimes" : 0
-    },
-    "results" : [ {
-      "id" : 3,
-      "lastName" : "Smith"
-    } ]
-  } ]
+    {
+      "criteria": {
+        "productName": "Some Product",
+        "minTimes": 0
+      },
+      "results": [
+        {
+          "id": 3,
+          "lastName": "Smith"
+        }
+      ]
+    }
+  ]
 }
