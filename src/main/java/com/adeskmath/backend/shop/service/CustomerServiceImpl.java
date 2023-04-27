@@ -36,12 +36,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> findBylastName(String lastName) {
+    public List<Customer> findByLastName(String lastName) {
         return repository.findByLastName(lastName);
     }
 
-//    @Override
-//    public JSONObject findByCriterias() {
-//        return null;
-//    }
 }

@@ -1,0 +1,21 @@
+{
+  "criterias": [
+    {
+      "lowestRank": 2
+    },
+    {
+      "lastName": "Smith"
+    },
+    {
+      "lastName": "Johnson"
+    },
+    {
+      "minExpenses": 50,
+      "maxExpenses": 60
+    },
+    {
+      "productName": "Some Product",
+      "minTimes": 0
+    }
+  ]
+}

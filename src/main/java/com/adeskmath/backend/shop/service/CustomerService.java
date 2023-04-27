@@ -14,6 +14,6 @@ public interface CustomerService {
 
     List<Customer> findByExpenseRange(BigDecimal minValue, BigDecimal maxValue);
 
-    List<Customer> findBylastName(String lastName);
-//    JSONObject findByCriterias();
+    List<Customer> findByLastName(String lastName);
+
 }
