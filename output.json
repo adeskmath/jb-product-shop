@@ -1,70 +1,52 @@
 {
-  "type": "search",
-  "results": [
-    {
-      "criteria": {
-        "lowestRank": 2
-      },
-      "results": [
-        {
-          "id": 2,
-          "lastName": "Johnson"
-        },
-        {
-          "id": 1,
-          "lastName": "Smith"
-        }
-      ]
+  "type" : "search",
+  "results" : [ {
+    "criteria" : {
+      "lowestRank" : 2
     },
-    {
-      "criteria": {
-        "lastName": "Smith"
-      },
-      "results": [
-        {
-          "id": 3,
-          "lastName": "Smith"
-        },
-        {
-          "id": 1,
-          "lastName": "Smith"
-        }
-      ]
+    "results" : [ {
+      "lastName" : "Johnson",
+      "name" : "John"
+    }, {
+      "lastName" : "Smith",
+      "name" : "Alex"
+    } ]
+  }, {
+    "criteria" : {
+      "lastName" : "Smith"
     },
-    {
-      "criteria": {
-        "lastName": "Johnson"
-      },
-      "results": [
-        {
-          "id": 2,
-          "lastName": "Johnson"
-        }
-      ]
+    "results" : [ {
+      "lastName" : "Smith",
+      "name" : "Alex"
+    }, {
+      "lastName" : "Smith",
+      "name" : "Will"
+    } ]
+  }, {
+    "criteria" : {
+      "lastName" : "Johnson"
     },
-    {
-      "criteria": {
-        "minExpenses": 50,
-        "maxExpenses": 60
-      },
-      "results": [
-        {
-          "id": 3,
-          "lastName": "Smith"
-        }
-      ]
+    "results" : [ {
+      "lastName" : "Johnson",
+      "name" : "John"
+    } ]
+  }, {
+    "criteria" : {
+      "minExpenses" : 50,
+      "maxExpenses" : 60
     },
-    {
-      "criteria": {
-        "productName": "Some Product",
-        "minTimes": 0
-      },
-      "results": [
-        {
-          "id": 3,
-          "lastName": "Smith"
-        }
-      ]
-    }
-  ]
+    "results" : [ {
+      "lastName" : "Smith",
+      "name" : "Will"
+    } ]
+  }, {
+    "criteria" : {
+      "productName" : "Some Product",
+      "minTimes" : 0
+    },
+    "results" : [ {
+      "lastName" : "Smith",
+      "name" : "Will"
+    } ]
+  } ]
 }
