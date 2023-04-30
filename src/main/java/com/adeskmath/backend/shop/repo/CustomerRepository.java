@@ -1,5 +1,6 @@
 package com.adeskmath.backend.shop.repo;
 
+import com.adeskmath.backend.shop.dto.DtoCustomer;
 import com.adeskmath.backend.shop.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -35,4 +36,27 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "ORDER BY COUNT(prod) DESC " +
             "LIMIT :lowestRank")
     List<Customer> findByLowestRank(@Param("lowestRank") Integer lowestRank);
+
+    @Query("SELECT row_to_json(t) " +
+            "FROM " +
+                "(" +
+                    "select c.lastName as name, " +
+                        "(" +
+                            "select json_agg(e) " +
+                            "from (" +
+                                    "select prod.name as name, prod.price as expenses " +
+                                    "from Product prod " +
+                                    "join Purchasing pur on prod = pur.product " +
+                                    "where c = pur.customer" +
+                                ") as e"+
+                        ") as purchases," +
+                        "(" +
+                            "select sum(prod.price) as totalExpenses from Product prod " +
+                            "join Purchasing pur on prod=pur.product " +
+                            "where pur.customer = c" +
+                        ") as sumAlias" +
+            " from Customer c" +
+            ") as t")
+    List<String> getStat();
+
 }

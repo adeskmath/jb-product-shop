@@ -40,4 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
         return repository.findByLastName(lastName);
     }
 
+    @Override
+    public List<String> getStat() {
+        return repository.getStat();
+    }
+
 }

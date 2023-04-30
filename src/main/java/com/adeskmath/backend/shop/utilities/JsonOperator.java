@@ -1,5 +1,7 @@
 package com.adeskmath.backend.shop.utilities;
 
+import com.adeskmath.backend.shop.dto.CustomerMapper;
+import com.adeskmath.backend.shop.dto.DtoCustomer;
 import com.adeskmath.backend.shop.entity.Customer;
 import com.adeskmath.backend.shop.service.CustomerService;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -54,8 +56,11 @@ public class JsonOperator implements ApplicationRunner {
                 case "lowestRank" -> customerService.findByLowestRank(jsonNode.path("lowestRank").asInt());
                 default -> null;
             };
+
+            List<DtoCustomer> customers = list.stream().map(CustomerMapper::map).toList();
             map.put("criteria", jsonNode);
-            map.put("results", list);
+            // TODO если list пустой?
+            map.put("results", customers);
             mapList.add(map);
         });
 

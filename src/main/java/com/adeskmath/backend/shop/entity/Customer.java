@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -22,6 +21,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
+    private String name;
     @Column(name = "last_name", nullable = false, length = -1)
     private String lastName;
 

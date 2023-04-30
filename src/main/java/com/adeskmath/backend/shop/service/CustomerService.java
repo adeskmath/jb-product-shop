@@ -16,4 +16,5 @@ public interface CustomerService {
 
     List<Customer> findByLastName(String lastName);
 
+    List<String> getStat();
 }
