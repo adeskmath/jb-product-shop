@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface PurchasingRepository extends JpaRepository<Purchasing, Long> {
 
+
     // temp, TODO: remove
     @Query("SELECT p FROM Purchasing p WHERE p.purchasingDate BETWEEN :startDate AND :endDate" +
             " AND p.customer = :customer")
@@ -24,6 +25,20 @@ public interface PurchasingRepository extends JpaRepository<Purchasing, Long> {
                                   @Param("endDate") Date endDate);
 
     @Query("SELECT SUM(prod.price) FROM Purchasing p JOIN Product prod on p.product = prod " +
-            "WHERE p.customer = :customer")
-    BigDecimal getTotalExpenses(@Param("customer") Customer customer);
+            "WHERE p.customer = :customer AND p.purchasingDate BETWEEN :startDate AND :endDate")
+    BigDecimal getTotalExpenses(@Param("startDate") Date startDate,
+                                @Param("endDate") Date endDate,
+                                @Param("customer") Customer customer);
+
+    @Query("SELECT SUM(prod.price) FROM Purchasing p JOIN Product prod on p.product = prod " +
+            "WHERE p.purchasingDate BETWEEN :startDate AND :endDate")
+    BigDecimal getGrandTotalExpenses(@Param("startDate") Date startDate,
+                                     @Param("endDate") Date endDate);
+
+    @Query("SELECT SUM(prod.price) / COUNT(DISTINCT c)" +
+            " FROM Purchasing p JOIN Product prod on p.product = prod" +
+            " JOIN Customer c ON p.customer = c" +
+            " WHERE p.purchasingDate BETWEEN :startDate AND :endDate")
+    BigDecimal getAvgExpenses(@Param("startDate") Date startDate,
+                               @Param("endDate") Date endDate);
 }

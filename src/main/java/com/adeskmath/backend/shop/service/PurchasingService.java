@@ -11,7 +11,11 @@ public interface PurchasingService {
     Purchasing add(Purchasing purchasing);
     List<Purchasing> findAllByParams(Date startDate, Date endDate);
 
-    BigDecimal getTotalExpenses(Customer customer);
+    BigDecimal getTotalExpenses(Date startDate, Date endDate, Customer customer);
+
+    BigDecimal getGrandTotalExpenses(Date startDate, Date endDate);
+
+    BigDecimal getAvgExpenses(Date startDate, Date endDate);
 
     List<Purchasing> findByParamsAndCustomer(Date startDate, Date endDate, Customer customer);
 }

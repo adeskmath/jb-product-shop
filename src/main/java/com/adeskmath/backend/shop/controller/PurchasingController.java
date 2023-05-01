@@ -1,6 +1,5 @@
 package com.adeskmath.backend.shop.controller;
 
-import com.adeskmath.backend.shop.entity.Customer;
 import com.adeskmath.backend.shop.entity.Purchasing;
 import com.adeskmath.backend.shop.search.PurchasingSearchPeriod;
 import com.adeskmath.backend.shop.search.PurchasingSearchValues;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -28,11 +26,6 @@ public class PurchasingController {
     @PostMapping("/statByCustomer")
     public ResponseEntity<List<Purchasing>> statByCustomer(@RequestBody PurchasingSearchValues psv) {
         return ResponseEntity.ok(purchasingService.findByParamsAndCustomer(psv.getStartDate(), psv.getEndDate(), psv.getCustomer()));
-    }
-
-    @PostMapping("/sum")
-    public ResponseEntity<BigDecimal> sum(@RequestBody Customer customer) {
-        return ResponseEntity.ok(purchasingService.getTotalExpenses(customer));
     }
 
     @PostMapping("/search")
