@@ -1,15 +1,20 @@
 package com.adeskmath.backend.shop.repo;
 
-import com.adeskmath.backend.shop.dto.DtoCustomer;
 import com.adeskmath.backend.shop.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
+    @Query("SELECT c FROM Customer c" +
+            " JOIN Purchasing p ON p.customer = c" +
+            " WHERE p.purchasingDate BETWEEN :startDate AND :endDate")
+    List<Customer> findByPurchasingPeriod(@Param("startDate") Date startDate,
+                                          @Param("endDate") Date endDate);
     List<Customer> findByLastName(String lastName);
 
     @Query("SELECT c FROM Customer c " +
@@ -37,6 +42,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "LIMIT :lowestRank")
     List<Customer> findByLowestRank(@Param("lowestRank") Integer lowestRank);
 
+    /*
     @Query("SELECT row_to_json(t) " +
             "FROM " +
                 "(" +
@@ -58,5 +64,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             " from Customer c" +
             ") as t")
     List<String> getStat();
-
+    */
 }

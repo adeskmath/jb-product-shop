@@ -5,13 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class SearchExpenseRange {
-    private BigDecimal minExpenses;
-    private BigDecimal maxExpenses;
+public class CustomerSearchLowestRank {
+    private Integer lowestRank;
 }

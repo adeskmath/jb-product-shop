@@ -3,6 +3,7 @@ package com.adeskmath.backend.shop.service;
 import com.adeskmath.backend.shop.entity.Customer;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 public interface CustomerService {
@@ -16,5 +17,7 @@ public interface CustomerService {
 
     List<Customer> findByLastName(String lastName);
 
-    List<String> getStat();
+//    List<String> getStat();
+
+    List<Customer> findByPurchasingPeriod(Date startDate, Date endDate);
 }

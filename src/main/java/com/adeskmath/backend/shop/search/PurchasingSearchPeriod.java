@@ -5,10 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class SearchLowestRank {
-    private Integer lowestRank;
+public class PurchasingSearchPeriod {
+    private Date startDate;
+    private Date endDate;
+
 }

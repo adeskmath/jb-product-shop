@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class SearchLastName {
-    private String lastName;
+public class CustomerSearchProductMin {
+    private String productName;
+    private Integer minTimes;
 }
