@@ -5,11 +5,11 @@
       "lowestRank" : 2
     },
     "results" : [ {
+      "lastName" : "Петров",
+      "name" : "Иван"
+    }, {
       "lastName" : "Johnson",
       "name" : "John"
-    }, {
-      "lastName" : "Smith",
-      "name" : "Alex"
     } ]
   }, {
     "criteria" : {
@@ -36,17 +36,32 @@
       "maxExpenses" : 60
     },
     "results" : [ {
+      "lastName" : "Имя 0",
+      "name" : "Фамилия 0"
+    }, {
       "lastName" : "Smith",
       "name" : "Will"
+    }, {
+      "lastName" : "Имя 1",
+      "name" : "Фамилия 1"
     } ]
   }, {
     "criteria" : {
-      "productName" : "Some Product",
+      "productName" : "Лыжи Fischer",
       "minTimes" : 0
     },
     "results" : [ {
-      "lastName" : "Smith",
-      "name" : "Will"
+      "lastName" : "Петров",
+      "name" : "Иван"
+    } ]
+  }, {
+    "criteria" : {
+      "productName" : "ботинки",
+      "minTimes" : 0
+    },
+    "results" : [ {
+      "lastName" : "Петров",
+      "name" : "Иван"
     } ]
   } ]
 }

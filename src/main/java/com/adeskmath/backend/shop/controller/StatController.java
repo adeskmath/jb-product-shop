@@ -1,7 +1,5 @@
 package com.adeskmath.backend.shop.controller;
 
-import com.adeskmath.backend.shop.dto.ProductMapper;
-import com.adeskmath.backend.shop.entity.Customer;
 import com.adeskmath.backend.shop.search.PurchasingSearchPeriod;
 import com.adeskmath.backend.shop.service.CustomerService;
 import com.adeskmath.backend.shop.service.ProductService;
@@ -12,12 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.RoundingMode;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Map;
+
+import static com.adeskmath.backend.shop.utilities.JsonOperator.getStatResults;
 
 @RestController
 @RequestMapping("/stat")
@@ -32,6 +27,12 @@ public class StatController {
         this.purchasingService = purchasingService;
     }
 
+    @PostMapping("")
+    public ResponseEntity<Map<String, Object>> stat(@RequestBody PurchasingSearchPeriod p) {
+        return ResponseEntity.ok(getStatResults(p, customerService, productService, purchasingService));
+    }
+
+    /*
     @PostMapping("")
     public ResponseEntity<Map<String, Object>> stat(@RequestBody PurchasingSearchPeriod p) {
 
@@ -79,4 +80,5 @@ public class StatController {
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
     }
+    */
 }

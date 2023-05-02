@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.adeskmath.backend.shop.utilities.JsonOperator.getResults;
+import static com.adeskmath.backend.shop.utilities.JsonOperator.getSearchResults;
 
 @RestController
 @RequestMapping("/customer")
@@ -96,7 +96,7 @@ public class CustomerController {
      * use JsonOperator.getResults()*/
     @PostMapping("/search")
     public ResponseEntity<Map<String, Object>> search(@RequestBody JsonNode searchCriteria) throws IOException {
-        return ResponseEntity.ok(getResults(searchCriteria, customerService));
+        return ResponseEntity.ok(getSearchResults(searchCriteria, customerService));
     }
 
     /** simple add, just for quick test*/
