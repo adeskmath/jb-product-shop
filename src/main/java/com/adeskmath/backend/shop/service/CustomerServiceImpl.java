@@ -22,8 +22,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> findByLowestRank(Integer lowestRank) {
-        return repository.findByLowestRank(lowestRank);
+    public List<Customer> findLeastActive(Integer leastActiveNumber) {
+        return repository.findLeastActive(leastActiveNumber);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> findByLastName(String lastName) {
-        return repository.findByLastName(lastName);
+    public List<Customer> findByLastName(String text) {
+        return repository.findByLastNameContainsIgnoreCase(text);
     }
 
     @Override

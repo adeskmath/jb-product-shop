@@ -1,12 +1,9 @@
 package com.adeskmath.backend.shop.controller;
 
-import com.adeskmath.backend.shop.dto.CustomerMapper;
-import com.adeskmath.backend.shop.dto.DtoCustomer;
 import com.adeskmath.backend.shop.entity.Customer;
-import com.adeskmath.backend.shop.search.*;
+import com.adeskmath.backend.shop.search.CustomerSearchExpenseRange;
+import com.adeskmath.backend.shop.search.CustomerSearchProductMin;
 import com.adeskmath.backend.shop.service.CustomerService;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,13 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static com.adeskmath.backend.shop.utilities.JsonOperator.getSearchResults;
 
 @RestController
 @RequestMapping("/customer")
@@ -28,75 +19,6 @@ public class CustomerController {
     private final CustomerService customerService;
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
-    }
-
-//    @PostMapping("/stat")
-//    public ResponseEntity<Map<Customer, Product>> stat() {
-//        return ResponseEntity.ok(customerService.testStat());
-//    }
-
-    /** getting customers' expenses from postgres json rows like:
-     * {"name":"Smith","purchases":[{"name":"Some Product","expenses":55.00}],"totalExpenses":55.00}
-     * doesn't work, types casting issue (hibernate mapping) to solve
-     * */
-    /*@PostMapping("/crazysql")
-    public ResponseEntity<List<SearchStat>> crazysql() {
-        customerService.getStat();
-        return ResponseEntity.ok(null);
-    }*/
-
-    /** Search customers by criteria
-     * with no use of JsonOperator.class */
-    @PostMapping("/searchNew")
-    public ResponseEntity<Map<String, Object>> searchNew(@RequestBody JsonNode searchCriterias) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode rootNode = objectMapper.readTree(searchCriterias.traverse());
-
-        List<Map<String, Object>> mapList = new ArrayList<>();
-
-        rootNode.path("criterias").forEach(jsonNodeCriteria -> {
-            Map<String, Object> map = new HashMap<>();
-            List<Customer> list = getCustomers(objectMapper, jsonNodeCriteria);
-            map.put("criteria", jsonNodeCriteria);
-            map.put("results", list.stream().map(CustomerMapper :: map).toList());
-            mapList.add(map);
-        });
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("type", "search");
-        map.put("results", mapList);
-
-        return ResponseEntity.ok(map);
-    }
-
-    private List<Customer> getCustomers(ObjectMapper objectMapper, JsonNode jsonNode) {
-        List<Customer> list = new ArrayList<>();
-        switch (jsonNode.fieldNames().next()) {
-            case "lastName" -> {
-                CustomerSearchLastName name = objectMapper.convertValue(jsonNode, CustomerSearchLastName.class);
-                list = customerService.findByLastName(name.getLastName());
-            }
-            case "lowestRank" -> {
-                CustomerSearchLowestRank lowest = objectMapper.convertValue(jsonNode, CustomerSearchLowestRank.class);
-                list = customerService.findByLowestRank(lowest.getLowestRank());
-            }
-            case "minExpenses" -> {
-                CustomerSearchExpenseRange expense = objectMapper.convertValue(jsonNode, CustomerSearchExpenseRange.class);
-                list = customerService.findByExpenseRange(expense.getMinExpenses(), expense.getMaxExpenses());
-            }
-            case "productName" -> {
-                CustomerSearchProductMin product = objectMapper.convertValue(jsonNode, CustomerSearchProductMin.class);
-                list = customerService.findByProductMinTimes(product.getProductName(), product.getMinTimes());
-            }
-        }
-        return list;
-    }
-
-    /** search customers by criteria
-     * use JsonOperator.getResults()*/
-    @PostMapping("/search")
-    public ResponseEntity<Map<String, Object>> search(@RequestBody JsonNode searchCriteria) throws IOException {
-        return ResponseEntity.ok(getSearchResults(searchCriteria, customerService));
     }
 
     /** simple add, just for quick test*/
@@ -111,35 +33,24 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.add(customer));
     }
 
-    /*** one-by-one test API*/
-
-    @PostMapping("/search/lowestRank")
-    public ResponseEntity<List<DtoCustomer>> searchLowestRank(@RequestBody CustomerSearchLowestRank lowestRank) {
-        List<Customer> list = customerService.findByLowestRank(lowestRank.getLowestRank());
-        List<DtoCustomer> customers = list.stream().map(CustomerMapper::map).toList();
-        return ResponseEntity.ok(customers);
+    @PostMapping("/leastActive")
+    public ResponseEntity<List<Customer>> searchListActive(@RequestBody Integer leastActiveNumber) {
+        return ResponseEntity.ok(customerService.findLeastActive(leastActiveNumber));
     }
 
-    @PostMapping("/search/expenseRange")
-    public ResponseEntity<List<DtoCustomer>> searchExpenseRange(@RequestBody CustomerSearchExpenseRange expenseRange) {
-        List<Customer> list = customerService.findByExpenseRange(expenseRange.getMinExpenses(), expenseRange.getMaxExpenses());
-        List<DtoCustomer> customers = list.stream().map(CustomerMapper::map).toList();
-        return ResponseEntity.ok(customers);
+    @PostMapping("/expenseRange")
+    public ResponseEntity<List<Customer>> searchExpenseRange(@RequestBody CustomerSearchExpenseRange range) {
+        return ResponseEntity.ok(customerService.findByExpenseRange(range.getMinExpenses(), range.getMaxExpenses()));
     }
 
-    @PostMapping("/search/productMin")
-    public ResponseEntity<List<DtoCustomer>> searchProductMin(@RequestBody CustomerSearchProductMin productMin) {
-        List<Customer> list = customerService.findByProductMinTimes(productMin.getProductName(), productMin.getMinTimes());
-        List<DtoCustomer> customers = list.stream().map(CustomerMapper::map).toList();
-        return ResponseEntity.ok(customers);
+    @PostMapping("/productMin")
+    public ResponseEntity<List<Customer>> searchProductMin(@RequestBody CustomerSearchProductMin data) {
+        return ResponseEntity.ok(customerService.findByProductMinTimes(data.getProductName(), data.getMinTimes()));
     }
 
-    @PostMapping("/search/lastName")
-    public ResponseEntity<List<DtoCustomer>> searchLastName(@RequestBody CustomerSearchLastName lastName) {
-        List<Customer> list = customerService.findByLastName(lastName.getLastName());
-        List<DtoCustomer> customers = list.stream().map(CustomerMapper::map).toList();
-        return ResponseEntity.ok(customers);
+    @PostMapping("/lastName")
+    public ResponseEntity<List<Customer>> searchLastName(@RequestBody String text) {
+        return ResponseEntity.ok(customerService.findByLastName(text));
     }
-
 
 }

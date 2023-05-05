@@ -1,0 +1,19 @@
+package com.adeskmath.backend.shop.json.search;
+
+import com.adeskmath.backend.shop.entity.Customer;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+public class CustomerResult {
+    private Object criteria;
+    private List<Customer> results = new ArrayList<>();
+}

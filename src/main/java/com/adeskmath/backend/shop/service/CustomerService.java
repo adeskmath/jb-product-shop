@@ -9,15 +9,13 @@ import java.util.List;
 public interface CustomerService {
     Customer add(Customer customer);
 
-    List<Customer> findByLowestRank(Integer lowestRank);
+    List<Customer> findLeastActive(Integer leastActiveNumber);
 
     List<Customer>findByProductMinTimes(String productName, Integer minTimes);
 
     List<Customer> findByExpenseRange(BigDecimal minValue, BigDecimal maxValue);
 
     List<Customer> findByLastName(String lastName);
-
-//    List<String> getStat();
 
     List<Customer> findByPurchasingPeriod(Date startDate, Date endDate);
 }

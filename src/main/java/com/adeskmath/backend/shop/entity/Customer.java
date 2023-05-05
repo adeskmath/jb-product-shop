@@ -1,5 +1,6 @@
 package com.adeskmath.backend.shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer", schema = "shop", catalog = "product-shop")
@@ -20,10 +23,15 @@ import java.util.Objects;
 public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @JsonIgnore
     private Long id;
     private String name;
     @Column(name = "last_name", nullable = false, length = -1)
     private String lastName;
+
+    @OneToMany(mappedBy = "customer")
+    @JsonIgnore
+    private Set<Purchasing> purchases = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
@@ -35,11 +43,11 @@ public class Customer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, lastName);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return lastName + " #" + id;
+        return lastName + " " + name;
     }
 }

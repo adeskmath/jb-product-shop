@@ -67,7 +67,7 @@ public class JsonOperator implements ApplicationRunner {
                         customerService.findByExpenseRange(jsonNode.path("minExpenses").decimalValue(), jsonNode.path("maxExpenses").decimalValue());
                 case "productName" ->
                         customerService.findByProductMinTimes(jsonNode.path("productName").asText(), jsonNode.path("minTimes").asInt());
-                case "lowestRank" -> customerService.findByLowestRank(jsonNode.path("lowestRank").asInt());
+                case "lowestRank" -> customerService.findLeastActive(jsonNode.path("lowestRank").asInt());
                 default -> null;
             };
 

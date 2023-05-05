@@ -1,6 +1,7 @@
 package com.adeskmath.backend.shop.repo;
 
 import com.adeskmath.backend.shop.entity.Customer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,7 +16,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             " WHERE p.purchasingDate BETWEEN :startDate AND :endDate")
     List<Customer> findByPurchasingPeriod(@Param("startDate") Date startDate,
                                           @Param("endDate") Date endDate);
-    List<Customer> findByLastName(String lastName);
+    List<Customer> findByLastNameContainsIgnoreCase(String text);
 
     @Query("SELECT c FROM Customer c " +
             "INNER JOIN Purchasing p ON c = p.customer " +
@@ -36,33 +37,24 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     @Query("SELECT c FROM Customer c " +
             "INNER JOIN Purchasing p ON c = p.customer " +
-            "INNER JOIN Product prod ON p.product = prod " +
             "GROUP BY c " +
-            "ORDER BY COUNT(prod) DESC " +
-            "LIMIT :lowestRank")
-    List<Customer> findByLowestRank(@Param("lowestRank") Integer lowestRank);
+            "ORDER BY COUNT(p) DESC " +
+            "LIMIT :leastActiveNumber")
+    List<Customer> findLeastActive(@Param("leastActiveNumber") Integer leastActiveNumber);
 
-    /*
-    @Query("SELECT row_to_json(t) " +
-            "FROM " +
-                "(" +
-                    "select c.lastName as name, " +
-                        "(" +
-                            "select json_agg(e) " +
-                            "from (" +
-                                    "select prod.name as name, prod.price as expenses " +
-                                    "from Product prod " +
-                                    "join Purchasing pur on prod = pur.product " +
-                                    "where c = pur.customer" +
-                                ") as e"+
-                        ") as purchases," +
-                        "(" +
-                            "select sum(prod.price) as totalExpenses from Product prod " +
-                            "join Purchasing pur on prod=pur.product " +
-                            "where pur.customer = c" +
-                        ") as sumAlias" +
-            " from Customer c" +
-            ") as t")
-    List<String> getStat();
-    */
+    @Query(value = "select concat(c.last_name, ' ', c.name) as customerName, prod.name as productName, " +
+            "sum(prod.price) as expenses from shop.customer c " +
+            "inner join shop.purchasing pur on c.id = pur.customer_id " +
+            "inner join shop.product prod on prod.id = pur.product_id " +
+            "where pur.purchasing_date between :dateFrom and :dateTo " +
+            "group by c.id, prod.name", nativeQuery = true)
+    List<CustomerStatJSON> customerByDate(@Param("dateFrom") Date dateFrom, @Param("dateTo") Date dateTo);
+
+    // interface-based projection (Spring Data JPA doc)
+    interface CustomerStatJSON {
+        @JsonIgnore
+        String getCustomerName();
+        String getProductName();
+        BigDecimal getExpenses();
+    }
 }
