@@ -1,7 +1,7 @@
 package com.adeskmath.backend.shop.controller;
 
 import com.adeskmath.backend.shop.entity.Purchasing;
-import com.adeskmath.backend.shop.search.PurchasingSearchPeriod;
+import com.adeskmath.backend.shop.search.CustomerSearchPeriod;
 import com.adeskmath.backend.shop.search.PurchasingSearchValues;
 import com.adeskmath.backend.shop.service.PurchasingService;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class PurchasingController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<List<Purchasing>> search(@RequestBody PurchasingSearchPeriod period) {
+    public ResponseEntity<List<Purchasing>> search(@RequestBody CustomerSearchPeriod period) {
         return ResponseEntity.ok(purchasingService.findAllByParams(period.getStartDate(), period.getEndDate()));
     }
 

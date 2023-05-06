@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Setter
 @Getter
-public class PurchasingSearchPeriod {
+public class CustomerSearchPeriod {
     private Date startDate;
     private Date endDate;
 

@@ -11,11 +11,11 @@ import java.util.Date;
 import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    @Query("SELECT c FROM Customer c" +
-            " JOIN Purchasing p ON p.customer = c" +
-            " WHERE p.purchasingDate BETWEEN :startDate AND :endDate")
-    List<Customer> findByPurchasingPeriod(@Param("startDate") Date startDate,
-                                          @Param("endDate") Date endDate);
+//    @Query("SELECT c FROM Customer c" +
+//            " JOIN Purchasing p ON p.customer = c" +
+//            " WHERE p.purchasingDate BETWEEN :startDate AND :endDate")
+//    List<Customer> findByPurchasingPeriod(@Param("startDate") Date startDate,
+//                                          @Param("endDate") Date endDate);
     List<Customer> findByLastNameContainsIgnoreCase(String text);
 
     @Query("SELECT c FROM Customer c " +
@@ -27,11 +27,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
                                       @Param("maxValue") BigDecimal maxValue);
 
     @Query("SELECT c FROM Customer c " +
-            "INNER JOIN Purchasing p ON c = p.customer " +
-            "INNER JOIN Product prod ON p.product = prod " +
-            "WHERE prod.name = :productName " +
+            "INNER JOIN c.purchases pur " +
+            "WHERE pur.product.name ILIKE %:productName% " +
             "GROUP BY c " +
-            "HAVING COUNT(prod) >= :minTimes")
+            "HAVING COUNT(c) >= :minTimes")
     List<Customer> findByProductMinTimes(@Param("productName") String productName,
                                          @Param("minTimes") Integer minTimes);
 

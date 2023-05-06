@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class CustomerSearchLowestRank {
-    private Integer lowestRank;
+public class CustomerSearchLeastActive {
+    private Integer leastActive;
 }

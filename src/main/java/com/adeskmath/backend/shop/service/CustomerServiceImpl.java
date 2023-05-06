@@ -2,6 +2,7 @@ package com.adeskmath.backend.shop.service;
 
 import com.adeskmath.backend.shop.entity.Customer;
 import com.adeskmath.backend.shop.repo.CustomerRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -9,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository repository;
 
@@ -42,8 +44,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<Customer> findByPurchasingPeriod(Date startDate, Date endDate) {
-        return repository.findByPurchasingPeriod(startDate, endDate);
+    public List<CustomerRepository.CustomerStatJSON> findByPurchasingPeriod(Date startDate, Date endDate) {
+        return repository.customerByDate(startDate, endDate);
     }
 
 

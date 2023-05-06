@@ -1,6 +1,7 @@
 package com.adeskmath.backend.shop.service;
 
 import com.adeskmath.backend.shop.entity.Customer;
+import com.adeskmath.backend.shop.repo.CustomerRepository;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -17,5 +18,5 @@ public interface CustomerService {
 
     List<Customer> findByLastName(String lastName);
 
-    List<Customer> findByPurchasingPeriod(Date startDate, Date endDate);
+    List<CustomerRepository.CustomerStatJSON> findByPurchasingPeriod(Date startDate, Date endDate);
 }
