@@ -11,11 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-//    @Query("SELECT c FROM Customer c" +
-//            " JOIN Purchasing p ON p.customer = c" +
-//            " WHERE p.purchasingDate BETWEEN :startDate AND :endDate")
-//    List<Customer> findByPurchasingPeriod(@Param("startDate") Date startDate,
-//                                          @Param("endDate") Date endDate);
+
     List<Customer> findByLastNameContainsIgnoreCase(String text);
 
     @Query("SELECT c FROM Customer c " +
@@ -45,9 +41,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "sum(prod.price) as expenses from shop.customer c " +
             "inner join shop.purchasing pur on c.id = pur.customer_id " +
             "inner join shop.product prod on prod.id = pur.product_id " +
-            "where pur.purchasing_date between :dateFrom and :dateTo " +
+            "where pur.purchasing_date between :startDate and :endDate " +
             "group by c.id, prod.name", nativeQuery = true)
-    List<CustomerStatJSON> customerByDate(@Param("dateFrom") Date dateFrom, @Param("dateTo") Date dateTo);
+    List<CustomerStatJSON> customerByDate(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
     // interface-based projection (Spring Data JPA doc)
     interface CustomerStatJSON {

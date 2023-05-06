@@ -1,8 +1,6 @@
 package com.adeskmath.backend.shop.controller;
 
 import com.adeskmath.backend.shop.entity.Purchasing;
-import com.adeskmath.backend.shop.search.CustomerSearchPeriod;
-import com.adeskmath.backend.shop.search.PurchasingSearchValues;
 import com.adeskmath.backend.shop.service.PurchasingService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/purchasing")
 public class PurchasingController {
@@ -20,17 +16,6 @@ public class PurchasingController {
 
     public PurchasingController(PurchasingService purchasingService) {
         this.purchasingService = purchasingService;
-    }
-
-    //TODO move to stat controller
-    @PostMapping("/statByCustomer")
-    public ResponseEntity<List<Purchasing>> statByCustomer(@RequestBody PurchasingSearchValues psv) {
-        return ResponseEntity.ok(purchasingService.findByParamsAndCustomer(psv.getStartDate(), psv.getEndDate(), psv.getCustomer()));
-    }
-
-    @PostMapping("/search")
-    public ResponseEntity<List<Purchasing>> search(@RequestBody CustomerSearchPeriod period) {
-        return ResponseEntity.ok(purchasingService.findAllByParams(period.getStartDate(), period.getEndDate()));
     }
 
     @PostMapping("/add")

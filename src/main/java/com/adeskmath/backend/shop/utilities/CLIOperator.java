@@ -24,17 +24,16 @@ public class CLIOperator implements ApplicationRunner {
             System.out.println("error: wrong or missed parameters");
             return;
         }
+        String operation = params[0];
         String inputFile = params[1];
         String outputFile = params[2];
-        if (params[0].equals("search")) {
-            fileService.search(inputFile, outputFile);
-            return;
+
+        switch (operation) {
+            case "search" -> fileService.search(inputFile, outputFile);
+            case "stat" -> fileService.stat(inputFile, outputFile);
+            default -> System.out.println("error: 1st parameter must be 'search' or 'stat'");
         }
-        if (params[0].equals("stat")) {
-            fileService.stat(inputFile, outputFile);
-            return;
-        }
-        System.out.println("error: 1st parameter must be 'search' or 'stat'");
+
     }
 
 }

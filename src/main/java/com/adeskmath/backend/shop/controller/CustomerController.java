@@ -21,7 +21,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    /** simple add, just for quick test*/
+    /** CRUD is not required by task, just 'add' for quick test*/
     @PostMapping("/add")
     public ResponseEntity<Customer> add(@RequestBody Customer customer) {
         if (customer.getId() != null && customer.getId() !=0) {

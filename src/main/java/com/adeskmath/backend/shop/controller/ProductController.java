@@ -1,7 +1,6 @@
 package com.adeskmath.backend.shop.controller;
 
 import com.adeskmath.backend.shop.entity.Product;
-import com.adeskmath.backend.shop.search.PurchasingSearchValues;
 import com.adeskmath.backend.shop.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -19,12 +16,6 @@ public class ProductController {
 
     public ProductController(ProductService productService) {
         this.productService = productService;
-    }
-
-    //TODO move to stat controller
-    @PostMapping("/statByCustomer")
-    public ResponseEntity<List<Product>> statByCustomer(@RequestBody PurchasingSearchValues psv) {
-        return ResponseEntity.ok(productService.findPurchasingPeriodAndCustomer(psv.getStartDate(), psv.getEndDate(), psv.getCustomer()));
     }
 
     @PostMapping("/add")

@@ -53,8 +53,8 @@ public class TestDataController {
         LocalDate startDate = LocalDate.now();
         for (int i = 0; i < 10; i++) {
             Purchasing p = new Purchasing();
-            p.setCustomer(customers.get(i));
-            p.setProduct(products.get(i));
+            p.setCustomer(customers.get((int) (Math.random() * 10)));
+            p.setProduct(products.get((int) (Math.random() * 10)));
             p.setPurchasingDate(Date.valueOf(startDate.plusDays(i)));
             purchasingService.add(p);
         }
