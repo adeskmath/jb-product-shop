@@ -16,6 +16,6 @@ public class StatResult {
     private String type = "stat";
     private Long totalDays;
     private List<CustomerPurchases> customers;
-    private BigDecimal totalExpenses;
-    private BigDecimal avgExpenses;
+    private BigDecimal totalExpenses = BigDecimal.ZERO;
+    private BigDecimal avgExpenses = BigDecimal.ZERO;
 }

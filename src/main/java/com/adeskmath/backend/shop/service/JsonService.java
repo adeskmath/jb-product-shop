@@ -82,6 +82,10 @@ public class JsonService {
         long diffDays = TimeUnit.DAYS.convert(diffDates, TimeUnit.MILLISECONDS);
         statResult.setTotalDays(diffDays + 1);
 
+        if (purchases.isEmpty()) {
+            return statResult;
+        }
+
         BigDecimal totalExpensesAll = BigDecimal.ZERO;
 
         for (Map.Entry<String, List<CustomerRepository.CustomerStatJSON>> entry : map.entrySet()) {
